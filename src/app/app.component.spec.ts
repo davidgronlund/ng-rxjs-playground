@@ -1,31 +1,30 @@
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { User } from './models/User';
+import { UserService } from './services/user.service';
+import { from } from 'rxjs';
 
-describe('AppComponent', () => {
+let fixture: ComponentFixture<AppComponent>;
+let component: AppComponent;
+let userServiceStub = describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        AppComponent
-      ],
+      declarations: [AppComponent],
+      providers: [UserService],
     }).compileComponents();
   }));
 
+  beforeEach(() => {
+    fixture = TestBed.createComponent(AppComponent);
+    component = fixture.componentInstance;
+  });
+
   it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
+    expect(component).toBeTruthy();
   });
 
-  it(`should have as title 'rxjs-ng-playground'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('rxjs-ng-playground');
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('rxjs-ng-playground app is running!');
+  it('should set userTexts to concatenated strings of users', () => {
+    component.run();
+    expect(component.userTexts).toContain('1 David Ingared');
   });
 });
